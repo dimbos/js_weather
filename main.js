@@ -13,7 +13,8 @@ window.addEventListener('load', () => {
             long = position.coords.longitude;
             lat = position.coords.latitude;
 
-            const api = `https://api.darksky.net/forecast/cd75294a6c74166eecfef757c191c8d0/${lat},${long}`;
+            const proxy = 'https://cors-anywhere.herokuapp.com/';
+            const api = `${proxy}https://api.darksky.net/forecast/cd75294a6c74166eecfef757c191c8d0/${lat},${long}`;
         
             fetch(api)
             .then((response) => {
@@ -26,7 +27,7 @@ window.addEventListener('load', () => {
                 temperatureDescription.textContent = summary;
                 locationTimezone.textContent = data.timezone;
                 //формула для приведения к цельсию
-                let celsius = (temperatura - 32) * (5 / 9);
+                let celsius = (temperature - 32) * (5 / 9);
                 setIcons(icon, document.querySelector('.icon'));
 
                 //Celsius
@@ -45,7 +46,7 @@ window.addEventListener('load', () => {
     }
 
     function setIcons(icon, iconId){
-        const skycons = new skycons({color: 'white'});
+        const skycons = new Skycons({"color": "white"});
         const currentIcons = icon.replace(/-/g, "_").toUpperCase();
         skycons.play();
         return skycons.set(iconId, Skycons[currentIcons]);
